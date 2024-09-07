@@ -1,7 +1,10 @@
 # Gra matematyczna!
+![Gra](/tree/Zdjęcia/GraMatematyczna3.png)
+
 ## O grze...
 
 ### Gra polega na rozwiązywaniu zadań matematycznych o różnym poziomie trudności.
+![Gra](/tree/Zdjęcia/GraMatematyczna2.png)
 
 Do wyboru są 4 poziomy trudności różniące się między sobą rodzajem i trudnością poszczególnych zadań.
 
@@ -40,6 +43,7 @@ lub
 ```
 
 ### Przed pierwszym uruchomieniem :
+![Gra](/tree/Zdjęcia/GraMatematyczna1.png)
 Przed pierwszym uruchomieniem zalecane jest użycie flagi -h lub --help, aby zapoznać się z instrukcją dotyczącą gry.
 ```
 ./gra --help
@@ -72,3 +76,5 @@ Skrypt kompatybilny jest z wszystkimi systemami Linux oraz Termux.
 Co jednak ważne - przez wzgląd na użycie kolorów RGB (ANSI escape \e[38;2...) gra nie będzie dopasowywać się do schematów kolorów używanego emulatora terminala.
 
 Zalecane uruchamianie w terminalu z ciemnym motywem.
+![Gra](/tree/Zdjęcia/GraMatematyczna0.png)
+
