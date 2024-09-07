@@ -48,7 +48,7 @@ lub
 ```
 ./gra -h
 ```
-lub 
+oraz 
 ```
 ./gra2 --help
 ```
