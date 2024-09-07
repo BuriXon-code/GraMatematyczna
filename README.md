@@ -1,4 +1,4 @@
-# Gra matematyczna!
+# Gra matematyczna! 🇵🇱
 ![Gra](/tree/Zdjęcia/GraMatematyczna3.png)
 
 ## O grze...
