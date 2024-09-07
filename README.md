@@ -61,3 +61,14 @@ lub
 ### Gra została zabezpieczona przed próbą zatrzymania sygnałem SIGINT (CTRL+C). Aby jednak ją zatrzymać, należy posiadać hasło administratora.
 ### Hasło :
 ![Hasło administratorskie](/captcha.png)
+
+## Uwagi!
+### Przytrzymanie CTRL+C :
+Przytrzymanie przycisków CTRL+C może wpłynąć źle na działanie skryptu i zatrzymać go przed ukończeniem gry.
+
+### Kompatybilność :
+Skrypt kompatybilny jest z wszystkimi systemami Linux oraz Termux.
+
+Co jednak ważne - przez wzgląd na użycie kolorów RGB (ANSI escape \e[38;2...) gra nie będzie dopasowywać się do schematów kolorów używanego emulatora terminala.
+
+Zalecane uruchamianie w terminalu z ciemnym motywem.
