@@ -1,0 +1,286 @@
+#!/bin/bash
+
+RESET='\033[0m'
+JASNOZIELONY='\033[38;2;144;238;144m'
+ZIELONY='\033[38;2;0;255;0m'
+CIEMNOZIELONY='\033[38;2;0;128;0m'
+SELEDYNOWY='\033[38;2;0;255;255m'
+ZOLTY='\033[38;2;255;255;0m'
+POMARANCZOWY='\033[38;2;255;165;0m'
+JASNOCZERWONY='\033[38;2;255;80;65m'
+CZERWONY='\033[38;2;139;0;0m'
+ROZOWY='\033[38;2;255;20;147m'
+FIOLETOWY='\033[38;2;128;0;128m'
+JASNONIEBIESKI='\033[38;2;160;200;230m'
+TURKUSOWY='\033[38;2;64;224;208m'
+CIEMNONIEBIESKI='\033[38;2;0;0;139m'
+BG_TURKUSOWY='\033[38;2;255;255;255;48;2;50;175;220m'
+
+echo -en "\e[?25h"
+
+show_help() {
+	echo -e "\n${FIOLETOWY}#=====================================#${RESET}"
+	echo -e "${FIOLETOWY}Gra matematyczna - rozwiazuj dzialania.${RESET}"
+	echo -e "${FIOLETOWY}#=====================================#${RESET}"
+	echo -e "\n ${FIOLETOWY}#=#=#${RESET}  Gra polega na wykonywaniu kolejnych dzialan matematycznych ${FIOLETOWY}#=#=#${RESET}\n ${FIOLETOWY}#=#=#${RESET}  o roznym poziomie zaawansowania.                           ${FIOLETOWY}#=#=#${RESET} "
+	echo -e "\n${CIEMNONIEBIESKI}> ${TURKUSOWY}Administrator gry (rodzic) w pierwszej chwili po uruchomieniu\ngry, wybiera poziom trudnosci gry:"
+	echo -e "\n${JASNOZIELONY}Latwy${RESET} poziom gry zawiera zadania zawierajace\ndodawanie i odejmowanie liczb z zakresu od 0 do 15.\nLiczby ujemne NIE są uwzglednione."
+	echo -e "\n${ZOLTY}Sredni${RESET} poziom gry zawiera zadania z zawierajace\ndodawanie i odejmowanie liczb z zakresu od 0 do 50.\nGra uwzglednia liczby ujemne."
+	echo -e "\n${POMARANCZOWY}Trudny${RESET} poziom gry zawiera zadania z zawierajace\ndodawanie i odejmowanie liczb z zakresu od 0 do 50\noraz z mnozeniem liczb z zakresu od 0 do 10.\nGra uwzglednia liczby ujemne."
+	echo -e "\n${CZERWONY}Bardzo trudny${RESET} poziom gry zawiera zadania z zawierajace\ndodawanie i odejmowanie liczb z zakresu od 0 do 100,\nmnozenie liczb z zakresu od 0 do 10\noraz potegowanie liczb\n(0-5 do potegi 0-3 oraz 5-10 do potegi 0-2).\nGra uwzglednia liczby ujemne."
+	echo -e "\n${CIEMNONIEBIESKI}> ${TURKUSOWY}W kolejnym kroku Administrator (rodzic) wybiera docelowa\nliczbę punktow, ktore musi zdobyc gracz:"
+	echo -e "\n${JASNOZIELONY}20 punktów${RESET} - zadaniem gracza jest zdobyć 20 punktow."
+	echo -e "\n${ZOLTY}50 punktów${RESET} - zadaniem gracza jest zdobyć 50 punktow."
+	echo -e "\n${POMARANCZOWY}100 punktów${RESET} - zadaniem gracza jest zdobyć 100 punktow."
+	echo -e "\n${CZERWONY}250 punktów${RESET} - zadaniem gracza jest zdobyć 250 punktow."
+	echo -e "\n${ROZOWY}Inna${RESET} - Administrator (rodzic) recznie wybiera,\nile punktow nalezy zdobyc, aby ukonczyć gre."
+	echo -e "\n${CIEMNONIEBIESKI}> ${TURKUSOWY}Aby grac, nalezy odpowiedziec na pytanie po jego\nwygenerowaniu, wpisujac wynik."
+	echo -e "\n${CIEMNONIEBIESKI}> ${TURKUSOWY}Gracz roczpoczyna gre posiadajac 10 punktow.\nCelem jego gry jest zdobycie odpowiedniej wybranej\nprzez Administratora (rodzica) liczby punktow."
+	echo -e "\n${RESET}Po udzieleniu poprawnej odpowiedzi, gracz otrzyma\nnalezny ${JASNOZIELONY}+1 punkt${RESET} do swojej puli."
+	echo -e "\n${RESET}Po udzieleniu blednej odpowiedzi, gracz straci\nodpowiednio ${JASNOCZERWONY}-1 punkt${RESET} ze swojej puli."
+	echo -e "\n${RESET}Za brak jakiejkolwiek odpowiedzi, gracz straci\nodpowiednio ${JASNOCZERWONY}-1 punkt${RESET} ze swojej puli."
+	echo -e "\n${RESET}Za próbę przerwania gry (SIGINT), gracz straci\nodpowiednio ${JASNOCZERWONY}-1 punkt${RESET} ze swojej puli."
+	echo -e "\n${CIEMNONIEBIESKI}> ${TURKUSOWY}Kiedy gracz osiagnie zadaną ilosc punktow,\nwtedy gra zakonczy się ${ZIELONY}wygrana${TURKUSOWY}."
+	echo -e "${TURKUSOWY}Jesli jednak punkty skoncza sie, wtedy gra\nzakonczy sie ${CZERWONY}przegrana${TURKUSOWY} gracza."
+	echo -e "\n${CIEMNONIEBIESKI}> ${TURKUSOWY}Czas gry nie jest wazny. Liczy się jedynie\npoprawnosc udzielanych odpowiedzi.\n  ${JASNOZIELONY}MILEJ GRY :)"
+	echo -e "\n\n${CZERWONY}> ${JASNOCZERWONY}Gre można zatrzymac jedynie używajac\nspecjalnego ${FIOLETOWY}HASLA${JASNOCZERWONY}, ktore powinien\nznac Administrator (rodzic) gry."
+	echo -e "Specjalne ${FIOLETOWY}HASLO${JASNOCZERWONY} nalezy wpisac w polu\noczekujacym wyniku za znakiem rownosci."
+
+}
+
+for arg in "$@"; do
+	case $arg in
+		-h|--help)
+			show_help
+			echo -en "\e[?25h"
+			exit 0
+		;;
+		*)
+			echo -e "\n${CZERWONY}Nieznana opcja: $arg${RESET}"
+			show_help
+			echo -e "\n${CZERWONY}Patrz, co piszesz!${RESET}"
+			echo -e "${CZERWONY}Opcja -h | --help jest Twoim przyjacielem${RESET}"
+			echo -en "\e[?25h"
+			exit 1
+		;;
+	esac
+done
+
+generate_easy_question() {
+	local num1=$((RANDOM % 16))
+	local num2=$((RANDOM % (num1 + 1)))
+	local operation=$((RANDOM % 2))
+
+	case $operation in
+		0) echo "$num1 + $num2" ;;
+		1) echo "$num1 - $num2" ;;
+		*) echo "0 + 0" ;;
+	esac
+}
+
+generate_medium_question() {
+	local num1=$((RANDOM % 51))
+	local num2=$((RANDOM % 51))
+	local operation=$((RANDOM % 2))
+
+	case $operation in
+		0) echo "$num1 + $num2" ;;
+		1) echo "$num1 - $num2" ;;
+		*) echo "0 + 0" ;;
+	esac
+}
+
+generate_hard_question() {
+	local num1=$((RANDOM % 51))
+	local num2=$((RANDOM % 51))
+	local operation=$((RANDOM % 3))
+
+	case $operation in
+		0) echo "$num1 + $num2" ;;
+		1) echo "$num1 - $num2" ;;
+		2)
+			num1=$((RANDOM % 11))
+			num2=$((RANDOM % 11))
+			echo "$num1 * $num2"
+		;;
+		*) echo "0 + 0" ;;
+	esac
+}
+
+generate_very_hard_question() {
+	local num1 num2 exp
+	local operation=$((RANDOM % 4))
+
+	case $operation in
+		0) # Addition
+			num1=$((RANDOM % 101))
+			num2=$((RANDOM % 101))
+			echo "$num1 + $num2"
+		;;
+		1) # Subtraction
+			num1=$((RANDOM % 101))
+			num2=$((RANDOM % 101))
+			echo "$num1 - $num2"
+		;;
+		2) # Multiplication
+			num1=$((RANDOM % 11))
+			num2=$((RANDOM % 11))
+			echo "$num1 * $num2"
+		;;
+		3) # Power
+			if [ $((RANDOM % 2)) -eq 0 ]; then
+				num1=$((RANDOM % 6))
+				exp=$((RANDOM % 4))
+			else
+				num1=$((RANDOM % 6 + 5))
+				exp=$((RANDOM % 3))
+			fi
+			echo "$num1 ^ $exp"
+		;;
+		*) echo "0 + 0" ;;
+	esac
+}
+
+display_banner() {
+	local banner="Punkty: $score | Pozostalo: $((points_needed - score))"
+	local width=$(tput cols)
+	echo -e "\n${BG_TURKUSOWY} $banner 	${RESET} \n" | awk -v width="$width" '{printf "%-*s\n", width, $0}'
+}
+
+handle_sigint() {
+	echo -e "${CZERWONY}Proba przerwania gry! -1 punkt!${RESET}"
+	((score > 0)) && ((score--))
+}
+
+display_rainbow_message() {
+	echo -e "\n#=================================#"
+	local message="Gra przerwana przez administratora!"
+	local colors=(
+		"\033[38;2;255;0;0m"
+		"\033[38;2;255;165;0m"
+		"\033[38;2;255;255;0m"
+		"\033[38;2;0;255;0m"
+		"\033[38;2;0;255;255m"
+		"\033[38;2;50;110;255m"
+		"\033[38;2;255;0;255m"
+	)
+    
+	local length=${#message}
+	local color_count=${#colors[@]}
+    
+	for ((i = 0; i < length; i++)); do
+		local color=${colors[$((i % color_count))]}
+		printf "${color}%b${RESET}" "${message:$i:1}"
+	done
+	echo -e "${TURKUSOWY}\n#=================================#"
+	echo
+}
+
+display_loss_message() {
+	echo -e "\n${JASNOCZERWONY}#=============================================#${RESET}"
+        echo -e "${CZERWONY}     Przegrales/as! Skonczyly Ci sie punkty.${RESET}"
+        echo -e "${JASNOCZERWONY}#=============================================#${RESET}"
+        echo -e "\n${FIOLETOWY}Teraz zapytaj rodzica, co dalej... :(${RESET}"
+	echo -en "\e[?25h"
+	exit 1
+}
+
+score=10
+
+clear
+echo -e "\n${JASNONIEBIESKI}Wybierz poziom trudnosci:${RESET}\n"
+echo -e "${JASNOZIELONY}1. Latwy${RESET}"
+echo -e "${ZOLTY}2. Sredni${RESET}"
+echo -e "${POMARANCZOWY}3. Trudny${RESET}"
+echo -e "${CZERWONY}4. Bardzo trudny${RESET}"
+echo
+echo -e "${JASNONIEBIESKI}Twoj wybor:${TURKUSOWY} \c"
+read -r level
+clear
+
+echo -e "\n${JASNONIEBIESKI}Wybierz liczbe punktow do zdobycia:${RESET}"
+echo -e "${JASNOZIELONY}1. 20${RESET}"
+echo -e "${ZOLTY}2. 50${RESET}"
+echo -e "${POMARANCZOWY}3. 100${RESET}"
+echo -e "${CZERWONY}4. 250${RESET}"
+echo -e "${ROZOWY}5. Inna (wlasna)${RESET}"
+echo
+echo -e "${JASNONIEBIESKI}Twój wybor:${TURKUSOWY} \c"
+read -r points_choice
+clear
+
+case $points_choice in
+	1) points_needed=20 ;;
+	2) points_needed=50 ;;
+	3) points_needed=100 ;;
+	4) points_needed=250 ;;
+	5) 
+		echo -e "\n${JASNONIEBIESKI}Podaj liczbe punktow do zdobycia:${RESET}"
+		read -r points_needed
+	;;
+	*) points_needed=20 ;;
+esac
+
+trap handle_sigint SIGINT
+
+while [ $score -gt 0 ]; do
+	clear
+	display_banner
+    
+	case $level in
+		1) question=$(generate_easy_question) ;;
+		2) question=$(generate_medium_question) ;;
+		3) question=$(generate_hard_question) ;;
+		4) question=$(generate_very_hard_question) ;;
+		*) echo -e "${CZERWONY}Nieprawidlowy poziom trudnosci.${RESET}" ; exit 1 ;;
+	esac
+
+	echo -e "\e[?25l${TURKUSOWY} Zadanie:${RESET} $question ${TURKUSOWY}= \c"
+	read -r response
+
+	if [ "$response" == "admin" ]; then
+		clear
+		echo -en "\e[?25h"
+		display_rainbow_message
+		exit 0
+	fi
+
+	if [ -z "$response" ]; then
+		result="${JASNOCZERWONY}Brak odpowiedzi! -1 punkt!${RESET}"
+		((score > 0)) && ((score--))
+	else
+		if [[ "$question" =~ ^(.*\s\^\s.*)$ ]]; then
+			num1=$(echo "$question" | awk -F '^' '{print $1}')
+			exp=$(echo "$question" | awk -F '^' '{print $2}')
+			answer=$(echo "scale=0; $num1 ^ $exp" | bc 2>/dev/null)
+		else
+			answer=$(bc <<< "scale=0; $question" 2>/dev/null)
+		fi
+
+		if [ "$response" -eq "$answer" ]; then
+			result="${JASNOZIELONY}+1 punkt!${RESET}"
+			((score++))
+		else
+			result="${JASNOCZERWONY}-1 punkt!${RESET}"
+			((score > 0)) && ((score--))
+		fi
+	fi
+
+	if [ $score -ge $points_needed ]; then
+		clear
+		echo -en "\e[?25h"
+		echo -e "\n${JASNOZIELONY}#=============================================#${RESET}"
+		echo -e "${ZIELONY}Gratulacje! Osiągnales/as wymagana liczbe punktow.${RESET}"
+		echo -e "${JASNOZIELONY}#=============================================#${RESET}"
+		echo -e "\n${CIEMNOZIELONY}Teraz zapytaj rodzica o nagrode :)${RESET}"
+		exit 0
+	fi
+
+	clear
+	display_banner
+	echo -e "$result"
+	sleep 1
+done
+
+clear
+display_loss_message
