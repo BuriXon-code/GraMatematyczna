@@ -44,6 +44,7 @@ lub
 
 ### Przed pierwszym uruchomieniem :
 ![Gra](/tree/Zdjęcia/GraMatematyczna1.png)
+
 Przed pierwszym uruchomieniem zalecane jest użycie flagi -h lub --help, aby zapoznać się z instrukcją dotyczącą gry.
 ```
 ./gra --help
@@ -76,5 +77,6 @@ Skrypt kompatybilny jest z wszystkimi systemami Linux oraz Termux.
 Co jednak ważne - przez wzgląd na użycie kolorów RGB (ANSI escape \e[38;2...) gra nie będzie dopasowywać się do schematów kolorów używanego emulatora terminala.
 
 Zalecane uruchamianie w terminalu z ciemnym motywem.
+
 ![Gra](/tree/Zdjęcia/GraMatematyczna0.png)
 
