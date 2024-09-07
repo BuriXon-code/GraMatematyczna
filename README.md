@@ -3,7 +3,7 @@
 
 ### Gra polega na rozwiązywaniu zadań matematycznych o różnym poziomie trudności.
 
-Do wyboru są 4 poziomy trudności różniących się między sobą rodzajem i trudnością poszczególnych zadań.
+Do wyboru są 4 poziomy trudności różniące się między sobą rodzajem i trudnością poszczególnych zadań.
 
 Gra dedykowana jest dzieciom bądź rodzicom dzieci uczących się działania z podstawowymi funktorami matematycznymi takimi jak dodawanie, odejmowanie, mnożenie czy potęgowanie.
 
