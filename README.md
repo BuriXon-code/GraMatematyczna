@@ -60,7 +60,7 @@ lub
 ## Możliwość zatrzymania skryptu - hasło administratora (rodzica) :
 ### Gra została zabezpieczona przed próbą zatrzymania sygnałem SIGINT (CTRL+C). Aby jednak ją zatrzymać, należy posiadać hasło administratora.
 ### Hasło :
-![Hasło administratorskie](/captcha.png)
+![Hasło administratorskie](/tree/Zdjęcia/captcha.png)
 
 ## Uwagi!
 ### Przytrzymanie CTRL+C :
